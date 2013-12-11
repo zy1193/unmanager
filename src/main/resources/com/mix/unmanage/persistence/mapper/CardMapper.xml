@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mix.unmanage.persistence.mapper.CardMapper">
+
+	<resultMap type="Card" id="CardMap">
+		<result property="goodsId" column="goods_id" />
+		<result property="enableFlag" column="enable_flag" />
+		<result property="endTime" column="end_time" />
+		<result property="goodsName" column="goods_name" />
+	</resultMap>
+
+	<sql id="col">
+		id,goods_id,goods_name,brandid, cardno, cardpwd,
+		agent, status,
+		enable_flag, ctime, mtime,
+		end_time,
+		taskid
+	</sql>
+
+	<select id="count" parameterType="Map" resultType="int">
+		select
+		count(1)
+		from t_pay_card
+		where brandid='yx'
+		<if test="goodsId!=null">and goods_id=#{goodsId}</if>
+		<if test="agent!=null">and agent=#{agent}</if>
+		<if test="taskid!=null"><![CDATA[and taskid=#{taskid}]]></if>
+		<if test="startTime!=null"><![CDATA[and ctime>=#{startTime}]]></if>
+		<if test="endTime!=null"><![CDATA[and ctime<=#{endTime}]]></if>
+		<if test="enableFlag!=null"><![CDATA[and enable_flag=#{enableFlag}]]></if>
+		<if test="status!=null"><![CDATA[and status=#{status}]]></if>
+		<if test="isvalid!=null and 'y'.toString()==isvalid"><![CDATA[and end_time>=NOW()]]></if>
+		<if test="isvalid!=null and 'n'.toString()==isvalid"><![CDATA[and end_time<NOW()]]></if>
+		order by ctime desc
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<select id="list" parameterType="Map" resultMap="CardMap">
+		select
+		<include refid="col" />
+		from t_pay_card
+		where brandid='yx' 
+		<if test="goodsId!=null">and goods_id=#{goodsId}</if>
+		<if test="agent!=null">and agent=#{agent}</if>
+		<if test="taskid!=null"><![CDATA[and taskid=#{taskid}]]></if>
+		<if test="startTime!=null"><![CDATA[and ctime>=#{startTime}]]></if>
+		<if test="endTime!=null"><![CDATA[and ctime<=#{endTime}]]></if>
+		<if test="enableFlag!=null"><![CDATA[and enable_flag=#{enableFlag}]]></if>
+		<if test="status!=null"><![CDATA[and status=#{status}]]></if>
+		<if test="isvalid!=null and 'y'.toString()==isvalid"><![CDATA[and end_time>=NOW()]]></if>
+		<if test="isvalid!=null and 'n'.toString()==isvalid"><![CDATA[and end_time<NOW()]]></if>
+		order by ctime desc
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+</mapper> 

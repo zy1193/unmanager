@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mix.unmanage.persistence.mapper.AcctMapper">
+
+	<resultMap type="Acct" id="AcctMap">
+		<result property="acctId" column="acct_id" />
+		<result property="brandId" column="brand_id" />
+		<result property="enableFlag" column="enable_flag" />
+		<result property="createTime" column="create_time" />
+		<result property="validDate" column="valid_date" />
+		<result property="giftValidDate" column="gift_valid_date" />
+		<result property="acctType" column="acct_type" />
+		<result property="goodsId" column="goods_id" />
+		<result property="bindLimit" column="bind_limit" />
+	</resultMap>
+
+	<sql id="col">
+		acct_id, brand_id, uid, pwd, md5pwd, balance, phone,
+		giftbalance, enable_flag,
+		create_time, valid_date, gift_valid_date,
+		Reserve1, Reserve2, agent,
+		first, taskname, acct_type, goods_id,
+		bind_limit
+	</sql>
+
+	<select id="count" parameterType="Map" resultType="int">
+		select
+		count(1)
+		from balance
+		where brand_id='yx'
+		<if test="uid!=null">and uid=#{uid}</if>
+		<if test="phone!=null">and phone=#{phone}</if>
+		<if test="startTime!=null"><![CDATA[and create_time>=#{startTime}]]></if>
+		<if test="endTime!=null"><![CDATA[and create_time<=#{endTime}]]></if>
+		<if test="agent!=null">and agent=#{agent}</if>
+		<if test="taskname!=null">and taskname=#{taskname}</if>
+		order by create_time desc
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<select id="list" parameterType="Map" resultMap="AcctMap">
+		select
+		<include refid="col" />
+		from balance
+		where brand_id='yx'
+		<if test="uid!=null">and uid=#{uid}</if>
+		<if test="phone!=null">and phone=#{phone}</if>
+		<if test="startTime!=null"><![CDATA[and create_time>=#{startTime}]]></if>
+		<if test="endTime!=null"><![CDATA[and create_time<=#{endTime}]]></if>
+		<if test="agent!=null">and agent=#{agent}</if>
+		<if test="taskname!=null">and taskname=#{taskname}</if>
+		order by create_time desc
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<!-- 转移帐号 -->
+	<insert id="transferAcct" parameterType="Map">
+		INSERT
+		INTO balance_his
+		SELECT * FROM balance WHERE brand_id='yx' AND
+		uid=#{uid}
+	</insert>
+
+	<!-- 删除帐号 -->
+	<delete id="deleteAcct" parameterType="Map">
+		delete
+		from balance where
+		brand_id='yx' and uid=#{uid}
+	</delete>
+
+	<!-- 查找帐号 -->
+	<select id="selectAcct" parameterType="Map" resultMap="AcctMap">
+		select *
+		from balance WHERE brand_id=#{brandId} AND
+		uid=#{uid} limit 1
+	</select>
+
+	<!-- 编辑帐号 -->
+	<update id="editAcct" parameterType="Map">
+		UPDATE balance SET
+		pwd=#{pwd},md5pwd=#{md5pwd},balance=#{balance},phone=#{phone},enable_flag=#{enableFlag}
+		,valid_date=#{validDate},bind_limit=#{bindLimit}
+		WHERE
+		brand_id=#{brandId} AND
+		uid=#{uid}
+	</update>
+
+</mapper> 

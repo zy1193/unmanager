@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mix.unmanage.persistence.mapper.TuserMapper">
+
+	<resultMap type="Tuser" id="TuserMap">
+		
+	</resultMap>
+
+	<sql id="col">
+		uid,uname,pwd,role
+	</sql>
+
+	<select id="list" resultMap="TuserMap">
+		select
+		<include refid="col" />
+		from t_unmanage_user
+	</select>
+
+	<select id="select" parameterType="Tuser" resultType="Tuser">
+		select
+		<include refid="col" />
+		from t_unmanage_user
+		where uid=#{uid} and pwd=#{pwd}
+	</select>
+
+	<select id="selectUser" parameterType="String" resultType="Tuser">
+		select
+		<include refid="col" />
+		from t_unmanage_user
+		where uid=#{uid}
+	</select>
+
+	<update id="updateUser" parameterType="Tuser">
+		update t_unmanage_user set
+		pwd=#{pwd} where uid=#{uid}
+	</update>
+
+</mapper> 

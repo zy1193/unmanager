@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mix.unmanage.persistence.mapper.AgentMapper">
+
+	<resultMap type="Agent" id="AgentMap">
+		<result property="telNo" column="tel_no" />
+		<result property="mobileNo" column="mobile_no" />
+		<result property="idCardNo" column="id_card_no" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="col">
+		id, alias, name, tel_no, mobile_no, id_card_no, qq, create_time,
+		flag, remarks
+	</sql>
+
+	<select id="count" parameterType="Map" resultType="int">
+		select
+		count(1)
+		from t_unmanage_agent
+		where 1=1
+		<if test="name!=null">and name=#{name}</if>
+		order by create_time desc
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<select id="list" parameterType="Map" resultMap="AgentMap">
+		select
+		<include refid="col" />
+		from t_unmanage_agent
+		where 1=1
+		<if test="name!=null">and name=#{name}</if>
+		order by create_time desc
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+	
+	<insert id="insert" parameterType="Agent">
+		insert into t_unmanage_agent
+		(alias, name, tel_no, mobile_no, id_card_no, qq, create_time,
+		flag, remarks)
+		values
+		(#{alias},#{name},#{telNo},#{mobileNo},#{idCardNo},#{qq},NOW(),'y',#{remarks})
+	</insert>
+	
+
+</mapper> 
