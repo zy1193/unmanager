@@ -199,7 +199,7 @@
 		  	<td align="center">${item.cardpwd}</td>
 		  	<td align="center">${(item.goodsName)}</td>
 		  	<td align="center">${item.agent}</td>
-		  	<td align="center">${item.ctime?substring(0,19)!""}</td>
+		  	<td align="center">${item.ctime?substring(0,10)!""}</td>
 		  	<#if item.status=='y'>
 			<td align="center">未使用</td>
 			<#else>
