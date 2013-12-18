@@ -170,8 +170,8 @@
 	        <td align="center">${item.phone}</td>
 		  	<td align="center">${item.pwd}</td>
 		  	<td align="center">${(item.balance/1000000)?string.currency}</td>
-		  	<td align="center">${item.createTime?substring(0,19)!""}</td>
-		  	<td align="center">${item.validDate?substring(0,19)!""}</td>
+		  	<td align="center">${item.createTime?substring(0,10)!""}</td>
+		  	<td align="center">${item.validDate?substring(0,10)!""}</td>
 			<td align="center">${item.agent!""}</td>
 			<td align="center">${item.taskname!""}</td>
 			<td align="center"><a href='#' onClick="editAcct('${item.brandId}','${item.uid}')" >编辑</a>|<a href='#' onClick="doPage('${item_index}','${item.uid}')" >删除</a></td>
