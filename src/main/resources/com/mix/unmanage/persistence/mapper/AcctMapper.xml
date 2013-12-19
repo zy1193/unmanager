@@ -12,6 +12,12 @@
 		<result property="acctType" column="acct_type" />
 		<result property="goodsId" column="goods_id" />
 		<result property="bindLimit" column="bind_limit" />
+		<result property="packageId" column="package_id" />
+		<result property="packageName" column="package_name" />
+		<result property="lastCallTime" column="last_call_time" />
+		<result property="effTime" column="eff_time" />
+		<result property="expTime" column="exp_time" />
+		<result property="packageType" column="package_type" />
 	</resultMap>
 
 	<sql id="col">
@@ -34,6 +40,10 @@
 		<if test="endTime!=null"><![CDATA[and create_time<=#{endTime}]]></if>
 		<if test="agent!=null">and agent=#{agent}</if>
 		<if test="taskname!=null">and taskname=#{taskname}</if>
+		<if test="isvalid!=null and 'y'.toString()==isvalid"><![CDATA[and valid_date>=NOW()]]></if>
+		<if test="isvalid!=null and 'n'.toString()==isvalid"><![CDATA[and valid_date<NOW()]]></if>
+		<if test="first!=null">and first=#{first}</if>
+		<if test="acctType!=null">and acct_type=#{acctType}</if>
 		order by create_time desc
 		<if test="offset!=null">
 			limit #{offset},#{limit}
@@ -51,6 +61,10 @@
 		<if test="endTime!=null"><![CDATA[and create_time<=#{endTime}]]></if>
 		<if test="agent!=null">and agent=#{agent}</if>
 		<if test="taskname!=null">and taskname=#{taskname}</if>
+		<if test="isvalid!=null and 'y'.toString()==isvalid"><![CDATA[and valid_date>=NOW()]]></if>
+		<if test="isvalid!=null and 'n'.toString()==isvalid"><![CDATA[and valid_date<NOW()]]></if>
+		<if test="first!=null">and first=#{first}</if>
+		<if test="acctType!=null">and acct_type=#{acctType}</if>
 		order by create_time desc
 		<if test="offset!=null">
 			limit #{offset},#{limit}
@@ -74,9 +88,46 @@
 
 	<!-- 查找帐号 -->
 	<select id="selectAcct" parameterType="Map" resultMap="AcctMap">
-		select *
-		from balance WHERE brand_id=#{brandId} AND
-		uid=#{uid} limit 1
+		select
+		t3.acct_id acct_id, t3.brand_id brand_id, t3.uid uid, t3.pwd pwd,
+		t3.md5pwd md5pwd, t3.balance balance,
+		t3.phone phone,
+		t3.giftbalance
+		giftbalance,
+		t3.enable_flag enable_flag,
+		t3.create_time create_time,
+		t3.valid_date valid_date,
+		t3.gift_valid_date gift_valid_date,
+		t3.Reserve1 Reserve1,
+		t3.Reserve2 Reserve2,
+		t3.agent agent,
+		t3.first
+		first,
+		t3.taskname taskname, t3.acct_type acct_type,
+		t3.goods_id
+		goods_id,
+		t3.bind_limit bind_limit,
+		t.package_id package_id,
+		t.package_name package_name,
+		t.last_call_time last_call_time,
+		t.eff_time eff_time,
+		t.exp_time exp_time,
+		t.package_type package_type
+		from
+		(SELECT * FROM
+		balance t1 WHERE
+		t1.brand_id=#{brandId} AND
+		uid=#{uid})
+		t3 left join
+		(SELECT * FROM
+		time_acct t2 WHERE
+		t2.brand_id=#{brandId}
+		AND
+		uid=#{uid})
+		t on
+		t3.brand_id=t.brand_id
+		limit
+		1
 	</select>
 
 	<!-- 编辑帐号 -->

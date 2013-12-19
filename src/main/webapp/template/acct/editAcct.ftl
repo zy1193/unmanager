@@ -72,6 +72,20 @@
 		<li class="sl">${acct.createTime?substring(0,19)!""}</li>
 		<li class="nl label">所属代理商</li>
 		<li class="sl">${acct.agent!""}</li>
+		<li class="nl label">批次</li>
+		<li class="sl">${acct.taskname!""}</li>
+		<li class="nl label">包月生效时间</li>
+		<#if acct.effTime??>
+		<li class="sl">${acct.effTime?substring(0,10)!""}</li>
+		<#else>
+		<li class="sl"></li>
+		</#if>
+		<li class="nl label">包月到期时间</li>
+		<#if acct.expTime??>
+		<li class="sl">${acct.expTime?substring(0,10)!""}</li>
+		<#else>
+		<li class="sl"></li>
+		</#if>
 		<li class="nl label">登录历史</li>
 		<li class="sl">
 		<#if acct.first=='n'>

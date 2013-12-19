@@ -3,9 +3,12 @@ package com.mix.unmanage.domain.entity;
 public class Acct {
 
 	long acctId, uid, balance, giftbalance, Reserve1;
-	String brandId, pwd, md5pwd, phone, enableFlag, createTime, validDate,
-			giftValidDate, Reserve2, agent, first, taskname, acctType, goodsId,
-			bindLimit;
+	private String brandId, pwd, md5pwd, phone, enableFlag, createTime,
+			validDate, giftValidDate, Reserve2, agent, first, taskname,
+			acctType, goodsId, bindLimit;
+
+	private String packageId, packageName, lastCallTime, effTime, expTime,
+			packageType;
 
 	public long getAcctId() {
 		return acctId;
@@ -165,5 +168,53 @@ public class Acct {
 
 	public void setBindLimit(String bindLimit) {
 		this.bindLimit = bindLimit;
+	}
+
+	public String getPackageId() {
+		return packageId;
+	}
+
+	public void setPackageId(String packageId) {
+		this.packageId = packageId;
+	}
+
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
+
+	public String getLastCallTime() {
+		return lastCallTime;
+	}
+
+	public void setLastCallTime(String lastCallTime) {
+		this.lastCallTime = lastCallTime;
+	}
+
+	public String getEffTime() {
+		return effTime;
+	}
+
+	public void setEffTime(String effTime) {
+		this.effTime = effTime;
+	}
+
+	public String getExpTime() {
+		return expTime;
+	}
+
+	public void setExpTime(String expTime) {
+		this.expTime = expTime;
+	}
+
+	public String getPackageType() {
+		return packageType;
+	}
+
+	public void setPackageType(String packageType) {
+		this.packageType = packageType;
 	}
 }

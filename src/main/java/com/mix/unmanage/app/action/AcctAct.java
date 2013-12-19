@@ -192,6 +192,9 @@ public class AcctAct {
 		String endTime = request.getParameter("endTime");
 		String agent = request.getParameter("agent");
 		String taskname = request.getParameter("taskname");
+		String first = request.getParameter("first");
+		String isvalid = request.getParameter("isvalid");
+		String acctType = request.getParameter("acctType");
 
 		if (StringUtils.isBlank(page)) {
 			page = "1";
@@ -225,6 +228,18 @@ public class AcctAct {
 			pmap.put("taskname", taskname);
 			map.put("taskname", taskname);
 		}
+		if (StringUtils.isNotBlank(first)) {
+			pmap.put("first", first);
+			map.put("first", first);
+		}
+		if (StringUtils.isNotBlank(isvalid)) {
+			pmap.put("isvalid", isvalid);
+			map.put("isvalid", isvalid);
+		}
+		if (StringUtils.isNotBlank(acctType)) {
+			pmap.put("acctType", acctType);
+			map.put("acctType", acctType);
+		}
 
 		int totalRecordCount = acctManager.count(pmap);
 		List<Acct> list = null;
@@ -250,6 +265,9 @@ public class AcctAct {
 		String endTime = request.getParameter("endTime");
 		String agent = request.getParameter("agent");
 		String taskname = request.getParameter("taskname");
+		String first = request.getParameter("first");
+		String isvalid = request.getParameter("isvalid");
+		String acctType = request.getParameter("acctType");
 
 		String filename = "acct_info_" + SequenceUtil.id() + ".xls";
 		OutputStream out = null;
@@ -287,6 +305,18 @@ public class AcctAct {
 		if (StringUtils.isNotBlank(taskname)) {
 			pmap.put("taskname", taskname);
 			map.put("taskname", taskname);
+		}
+		if (StringUtils.isNotBlank(first)) {
+			pmap.put("first", first);
+			map.put("first", first);
+		}
+		if (StringUtils.isNotBlank(isvalid)) {
+			pmap.put("isvalid", isvalid);
+			map.put("isvalid", isvalid);
+		}
+		if (StringUtils.isNotBlank(acctType)) {
+			pmap.put("acctType", acctType);
+			map.put("acctType", acctType);
 		}
 
 		HSSFWorkbook wb = acctManager.exportExcel(pmap);

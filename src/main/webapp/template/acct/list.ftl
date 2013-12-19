@@ -57,6 +57,10 @@
 		document.queryform.taskname.value="";
 		document.queryform.startTime.value="";
 		document.queryform.endTime.value="";
+		
+		document.queryform.acctType.value="";
+		document.queryform.isvalid.value="";
+		document.queryform.first.value="";
   	}
   	
   	function test(){
@@ -121,27 +125,92 @@
   <form name="queryform" namespace="/acct" action="${rc.contextPath}/acct/acctList.act" method="post">
   <div class="right_box">
   	<div id="titlediv">
-  		<table>
+  		<table border='0'>
   			<tr>
-  				<th>帐号：</th>
-  				<th><input  class="required ipb_s" type='text' name='uid' id='uid' value='${uid!""}' /></th>
-  				<th>手机：</th>
-  				<th><input  class="required ipb_s" type='text' name='phone' id='phone' value='${phone!""}' /></th>
-  				<th>代理商：</th>
-	  			<th><input  class="required ipb_s" type='text' name='agent' id='agent' value='${agent!""}' /></th>
-  				<th>批次：</th>
-  				<th><input  class="required ipb_s" type='text' name='taskname' id='taskname' value='${taskname!""}' /></th>
+  				<th align="right">帐号：</th>
+  				<th align="left"><input  class="required ipb_s" type='text' name='uid' id='uid' value='${uid!""}' /></th>
+  				<th align="right">手机：</th>
+  				<th align="left"><input  class="required ipb_s" type='text' name='phone' id='phone' value='${phone!""}' /></th>
+  				<th align="right">代理商：</th>
+	  			<th align="left"><input  class="required ipb_s" type='text' name='agent' id='agent' value='${agent!""}' /></th>
+  				<th align="right">批次：</th>
+  				<th align="left"><input  class="required ipb_s" type='text' name='taskname' id='taskname' value='${taskname!""}' /></th>
+  				<th align="right">注册：</th>
+  				<th align="left"><select name="first" id="first" width="200px" class="required ipb_l" >
+	  				    <#if first=='y'>
+	  				    <option value=''>--请选择--</option>
+	   				    <option value='y' selected>未注册</option>
+	   				    <option value='n'>已注册</option>
+	   				    <#elseif first=='n'>
+	   				    <option value=''>--请选择--</option>
+	   				    <option value='y'>未注册</option>
+	   				    <option value='n' selected>已注册</option>
+	   				    <#else>
+	   				    <option value='' selected>--请选择--</option>
+	   				    <option value='y'>未注册</option>
+	   				    <option value='n'>已注册</option>
+	   				    </#if>
+	  				</select>
+	  			</th>
+	  			<th align="right">过期：</th>
+  				<th align="left"><select name="isvalid" id="isvalid" width="200px" class="required ipb_l" >
+	  				    <#if isvalid=='y'>
+	  				    <option value=''>--请选择--</option>
+	   				    <option value='y' selected>未过期</option>
+	   				    <option value='n'>已过期</option>
+	   				    <#elseif isvalid=='n'>
+	   				    <option value=''>--请选择--</option>
+	   				    <option value='y'>未过期</option>
+	   				    <option value='n' selected>已过期</option>
+	   				    <#else>
+	   				    <option value='' selected>--请选择--</option>
+	   				    <option value='y'>未过期</option>
+	   				    <option value='n'>已过期</option>
+	   				    </#if>
+	  				</select>
+	  			</th>
   				</tr>
   				<tr>
-  				<th>&nbsp;创建时间：</th>
-  				<th><input type="text" name="startTime" id="startTime" class="Wdate" type="text"  onclick="WdatePicker({startDate: '%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${startTime!''}"/></th>
-  				<th>&nbsp;到 <input type="text" name="endTime" id="endTime" class="Wdate" type="text"   onclick="WdatePicker({startDate: '%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${endTime!''}"/></th>
+  				<th align="right">创建时间：</th>
+  				<th align="left"><input type="text" name="startTime" id="startTime" class="Wdate" type="text"  onclick="WdatePicker({startDate: '%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${startTime!''}"/></th>
+  				<th align="right">到：</th>
+  				<th align="left"><input type="text" name="endTime" id="endTime" class="Wdate" type="text"   onclick="WdatePicker({startDate: '%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${endTime!''}"/></th>
   				
-  				<th style="padding-bottom:5px;"><button  class="btn but_s" type='submit' >查 询</button>
+  				<th align="right">账号类型：</th>
+  				<th align="left">
+  				<select name="acctType" id="acctType" width="200px" class="required ipb_l" >
+  					<#if acctType=='year'>
+  				    <option value=''>--请选择--</option>
+   				    <option value='year' selected>年卡</option>
+   				    <option value='month'>月卡</option>
+   				    <option value='day'>日卡</option>
+   				    <#elseif acctType=='month'>
+   				    <option value=''>--请选择--</option>
+   				    <option value='year'>年卡</option>
+   				    <option value='month' selected>月卡</option>
+   				    <option value='day'>日卡</option>
+   				    <#elseif acctType=='day'>
+   				    <option value=''>--请选择--</option>
+   				    <option value='year'>年卡</option>
+   				    <option value='month'>月卡</option>
+   				    <option value='day' selected>日卡</option>
+   				    <#else>
+   				    <option value=''>--请选择--</option>
+   				    <option value='year'>年卡</option>
+   				    <option value='month'>月卡</option>
+   				    <option value='day'>日卡</option>
+   				    </#if>
+  				</select>
+  				</th>
+  				
+  				<th style="padding-bottom:5px;" ></th>
+  				<th style="padding-bottom:5px;" >
+  				<button  class="btn but_s" type='submit' >查 询</button>
   				<!--button  class="btn but_s" type='submit' >批量审核</button-->
   				<!--button  class="btn but_s" type='submit' >停止合作</button-->
   				<input  class="btn but_s" type='button' onClick='test()' value='导 出' />
-  				<input  class="btn but_s" type='button' onClick='reset1()' value='重 置' /></th>
+  				<input  class="btn but_s" type='button' onClick='reset1()' value='重 置' />
+  				</th>
   			</tr>
   		</table>
   	</div>
@@ -158,7 +227,7 @@
 			<th>创建日期</th>
 			<th>余额有效期</th>
 			<th>代理商</th>
-			<th>批次</th>
+			<th>帐号类型</th>
 			<th>操作</th>
 			<th width="4%">详情</th>
 	    </tr>    
@@ -173,7 +242,15 @@
 		  	<td align="center">${item.createTime?substring(0,10)!""}</td>
 		  	<td align="center">${item.validDate?substring(0,10)!""}</td>
 			<td align="center">${item.agent!""}</td>
-			<td align="center">${item.taskname!""}</td>
+			
+			<#if item.acctType=='year'>
+			<td align="center">年卡</td>
+			<#elseif item.acctType=='month'>
+			<td align="center">月卡</td>
+			<#else>
+			<td align="center">日卡</td>
+			</#if>
+			
 			<td align="center"><a href='#' onClick="editAcct('${item.brandId}','${item.uid}')" >编辑</a>|<a href='#' onClick="doPage('${item_index}','${item.uid}')" >删除</a></td>
 		  	<td align="center"><img src="${rc.contextPath}/images/a.gif" id ='img${item_index}' title="点击展开" onclick='showDetail(${item_index});'></td>
 	    </tr>
@@ -189,6 +266,8 @@
 	    	   		       <#else>
 	    	   		       <td>已冻结</td>
 	    	   		       </#if>
+	    	   		       <td style="width:100px">批次：</td>
+	    	   		       <td>${item.taskname!""}</td>
 	    	   		       <td style="width:100px">品牌：</td>
 	    	   		       <td>亿信</td>
 	    	   		    </tr>
