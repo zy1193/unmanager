@@ -1,4 +1,4 @@
-body {font-family: consolas, 宋体;font-size: 14px;line-height: 150%;background-color: #fff;}
+body {font-family: consolas, 宋体;font-size: 12px;line-height: 150%;background-color: #fff;}
 body,div ,ul,li,h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, blockquote, p {padding:0px;margin:0px;}
 #maincontainer {width: 840px;}
 a {text-decoration: none;color: blue;}
@@ -11,9 +11,9 @@ ul {list-style-type: none;}
 #mainmenu li a {display: block;padding: 6px;margin: 1px;}
 #mainmenu li a:hover {background-color: DarkGray;color: white;}
 #mainmenu div {height: 12px;background-color: DarkGray;margin: 0px;padding: 0px;}
-h1 {font-family: consolas, 宋体;font-size: 18px;font-weight: bold;line-height: 150%;float: left;}
+h1 {font-family: consolas, 宋体;font-size: 16px;font-weight: bold;line-height: 150%;float: left;}
 .contbg{background:#24425d;}
-h2 {font-family: consolas, 宋体;font-size: 16px;font-weight: bold;line-height: 150%;}
+h2 {font-family: consolas, 宋体;font-size: 14px;font-weight: bold;line-height: 150%;}
 /** 清除浮动造成的塌陷  http://www.zhangxinxu.com/wordpress/?p=1136 **/
 .fix {*zoom: 1;margin:20px 0 0px 30px;}
 .fix  li{line-height:30px;}
