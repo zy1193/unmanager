@@ -105,7 +105,8 @@ public class CardAct {
 		String agent = request.getParameter("agent");
 		String startTime = request.getParameter("startTime");
 		String endTime = request.getParameter("endTime");
-
+		String cardno = request.getParameter("cardno");
+		
 		if (StringUtils.isBlank(page)) {
 			page = "1";
 		} else if (Integer.parseInt(page) < 1) {
@@ -146,6 +147,10 @@ public class CardAct {
 			pmap.put("endTime", endTime);
 			map.put("endTime", endTime);
 		}
+		if (StringUtils.isNotBlank(cardno)) {
+			pmap.put("cardno", cardno);
+			map.put("cardno", cardno);
+		}
 
 		map.put("agentlist", agentManager.list());
 		map.put("goodslist", goodsManager.list());
@@ -176,6 +181,7 @@ public class CardAct {
 		String status = request.getParameter("status");
 		String enableFlag = request.getParameter("enableFlag");
 		String isvalid = request.getParameter("isvalid");
+		String cardno = request.getParameter("cardno");
 
 		String filename = "card_info_" + SequenceUtil.id() + ".xls";
 		OutputStream out = null;
@@ -221,6 +227,10 @@ public class CardAct {
 		if (StringUtils.isNotBlank(endTime)) {
 			pmap.put("endTime", endTime);
 			map.put("endTime", endTime);
+		}
+		if (StringUtils.isNotBlank(cardno)) {
+			pmap.put("cardno", cardno);
+			map.put("cardno", cardno);
 		}
 
 		HSSFWorkbook wb = cardManager.exportExcel(pmap);

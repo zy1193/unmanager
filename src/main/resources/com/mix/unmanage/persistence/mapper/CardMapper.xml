@@ -31,6 +31,7 @@
 		<if test="status!=null"><![CDATA[and status=#{status}]]></if>
 		<if test="isvalid!=null and 'y'.toString()==isvalid"><![CDATA[and end_time>=NOW()]]></if>
 		<if test="isvalid!=null and 'n'.toString()==isvalid"><![CDATA[and end_time<NOW()]]></if>
+		<if test="cardno!=null">and cardno=#{cardno}</if>
 		order by ctime desc
 		<if test="offset!=null">
 			limit #{offset},#{limit}
@@ -51,6 +52,7 @@
 		<if test="status!=null"><![CDATA[and status=#{status}]]></if>
 		<if test="isvalid!=null and 'y'.toString()==isvalid"><![CDATA[and end_time>=NOW()]]></if>
 		<if test="isvalid!=null and 'n'.toString()==isvalid"><![CDATA[and end_time<NOW()]]></if>
+		<if test="cardno!=null">and cardno=#{cardno}</if>
 		order by ctime desc
 		<if test="offset!=null">
 			limit #{offset},#{limit}
