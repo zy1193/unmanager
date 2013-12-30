@@ -68,6 +68,7 @@ public class AcctAct {
 			out = response.getWriter();
 		} catch (IOException e) {
 			log.error("生成账号异常！");
+			return;
 		}
 
 		String brandid = "yx";
@@ -86,16 +87,19 @@ public class AcctAct {
 				|| StringUtils.isBlank(day)) {
 			log.error("生成账号参数错误！");
 			out.print("参数错误！");
+			return;
 		}
 
 		boolean flag = createAcctService.createTimeAcct(brandid, number, agent,
 				year, month, day, acctType, goodsId, bindLimit, remarks);
 
 		if (flag) {
-			log.error("生成账号成功！");
+			log.info("生成账号成功！");
+			return;
 		} else {
-			log.error("生成账号失败！");
+			log.info("生成账号失败！");
 			out.print("请稍候再试！");
+			return;
 		}
 
 	}

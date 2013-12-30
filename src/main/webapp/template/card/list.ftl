@@ -7,6 +7,7 @@
 	<meta http-equiv="Cache-Control" content="no-store, must-revalidate"/> 
 	<meta http-equiv="expires" content="0"/>
     <link href="${rc.contextPath}/css/default.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="${rc.contextPath}/css/pop.css" rel="stylesheet" type="text/css" media="all" />
 	<style>
 		#div {
 			width: auto;
@@ -22,7 +23,7 @@
 	</style>
   <title> 卡列表 </title>
   <script type="text/javascript" src="${rc.contextPath}/js/jquery.js"></script>
- 
+  <script type="text/javascript" src="${rc.contextPath}/js/tipswindown.js"></script>
  </head>
  <script type="text/javascript">
 	function showDetail(divid){			//隐藏层，传入每行的序号
@@ -58,8 +59,9 @@
 		  document.queryform.endTime.value="";
 		  
 		  document.queryform.enableFlag.value="";
-		  document.queryform.ctime.value="";
+		  document.queryform.cardno.value="";
 		  document.queryform.status.value="";
+		  document.queryform.isvalid.value="";
 	  	}
 	  	
 	  	function test(){
@@ -71,16 +73,73 @@
 		  	 var taskid=$('#taskid').val();
 		  	 var startTime=$('#startTime').val();
 		  	 var endTime=$('#endTime').val();
-		  	 if(agent=='' && goodsId=='' && taskid=='' && startTime=='' && endTime==''){
+		  	 
+		  	 var enableFlag=$('#enableFlag').val();
+		  	 var cardno=$('#cardno').val();
+		  	 var status=$('#status').val();
+		  	 var isvalid=$('#isvalid').val();
+		  	 if(agent=='' && goodsId=='' && taskid=='' && startTime=='' && endTime==''&& enableFlag=='' && cardno=='' && status=='' && isvalid==''){
 		  	 	if(!confirm('确实要导出所有充值卡吗？最好选择条件导出，重新选择请点“取消”！')){
 		  	 		return;
 		  	 	}
 		  	 }
 		  	 
-			 window.location.href='${rc.contextPath}/card/exportExcel.act?goodsId='+goodsId+'&agent='+agent+'&taskid='+taskid+'&startTime='+startTime+'&endTime='+endTime;
+			 window.location.href='${rc.contextPath}/card/exportExcel.act?goodsId='+goodsId+'&agent='+agent+'&taskid='+taskid+'&startTime='+startTime+'&endTime='+endTime+'&enableFlag='+enableFlag+'&cardno='+cardno+'&status='+status+'&isvalid='+isvalid;
 		 }
 		  	
-  	  </script>
+		  	
+		 $("document").ready(function(){
+		 	 $("#isread-text").live("click",function(){ 
+	           popOrderDetail($(this).attr("value"));
+	         }) 
+		 });
+		 
+		 /*
+		 *弹出订单详情窗口 orderId表示订单主键ID
+		 */
+		function popOrderDetail(cardno){
+			getOrderDetail(cardno); // 获取订单详情
+			// 显示弹出框
+			popTips();
+		}
+		
+		//弹出层调用
+		function popTips(){
+			showTipsWindown("基本详情信息", 'simTestContent', 700, 270);
+		}
+		
+		/*
+		*弹出本页指定ID的内容于窗口
+		*id 指定的元素的id
+		*title:	window弹出窗的标题
+		*width:	窗口的宽,height:窗口的高
+		*/
+		function showTipsWindown(title,id,width,height){
+			tipsWindown(title,"id:"+id,width,height,"true","","true",id);
+		}
+		
+		// 获取订单详情信息
+	function getOrderDetail(cardno){
+     	var url = "${rc.contextPath}/order/orderList4Card.act";
+     	
+		$.ajax({
+		url : url,
+		dataType : "html",
+		type : "POST",
+		async : false,
+		data : {
+			cno : $.trim(cardno)
+		},
+		success : function(data) {
+			    if (data != '') {
+	                $(".mainlist").html(data);		
+				} else {
+				
+				}
+			}
+		});
+	 }
+</script>
 <script type="text/javascript" src="${rc.contextPath}/js/DatePicker/WdatePicker.js"></script>
  <body>
   <form name="queryform" namespace="/card" action="${rc.contextPath}/card/cardList.act" method="post">
@@ -88,8 +147,8 @@
   	<div id="titlediv">
   		<table border='0'>
   			<tr>
-  				<th>代理商：</th>
-  				<th><select name="agent" id="agent" width="200px" class="required ipb_l" >
+  				<th align="right">代理商：</th>
+  				<th align="left"><select name="agent" id="agent" width="200px" class="required ipb_l" >
 	  				    <option value=''>--请选择--</option>
 					  <#if agentlist??>
 	   				  <#list agentlist as item>
@@ -98,8 +157,8 @@
 	   				  </#if>
 	  				</select>
 	  			</th>
-  				<th>商品：</th>
-	  			<th><select name="goodsId" id="goodsId" width="200px" class="required ipb_l" >
+  				<th align="right">商品：</th>
+	  			<th align="left"><select name="goodsId" id="goodsId" width="200px" class="required ipb_l" >
 	  				    <option value=''>--请选择--</option>
 					  <#if goodslist??>
 	   				  <#list goodslist as item>
@@ -108,10 +167,10 @@
 	   				  </#if>
 	  				</select>
 	  			</th>
-  				<th>批次：</th>
-  				<th><input  class="required ipb_s" type='text' name='taskid' id='taskid' value='${taskid!""}' /></th>
-  				<th>冻结：</th>
-  				<th><select name="enableFlag" id="enableFlag" width="200px" class="required ipb_l" >
+  				<th align="right">批次：</th>
+  				<th align="left"><input  class="required ipb_s" type='text' name='taskid' id='taskid' value='${taskid!""}' /></th>
+  				<th align="right">冻结：</th>
+  				<th align="left"><select name="enableFlag" id="enableFlag" width="200px" class="required ipb_l" >
 	  				    <#if enableFlag=='y'>
 	  				    <option value=''>--请选择--</option>
 	   				    <option value='y' selected>未冻结</option>
@@ -127,8 +186,8 @@
 	   				    </#if>
 	  				</select>
 	  			</th>
-	  			<th>状态：</th>
-  				<th><select name="status" id="status" width="200px" class="required ipb_l" >
+	  			<th align="right">状态：</th>
+  				<th align="left"><select name="status" id="status" width="200px" class="required ipb_l" >
 	  				    <#if status=='y'>
 	  				    <option value=''>--请选择--</option>
 	   				    <option value='y' selected>未使用</option>
@@ -144,8 +203,8 @@
 	   				    </#if>
 	  				</select>
 	  			</th>
-	  			<th>失效：</th>
-  				<th><select name="isvalid" id="isvalid" width="200px" class="required ipb_l" >
+	  			<th align="right">失效：</th>
+  				<th align="left"><select name="isvalid" id="isvalid" width="200px" class="required ipb_l" >
 	  				    <#if isvalid=='y'>
 	  				    <option value=''>--请选择--</option>
 	   				    <option value='y' selected>未失效</option>
@@ -163,10 +222,13 @@
 	  			</th>
   				</tr>
   				<tr>
-  				<th>&nbsp;创建时间：</th>
-  				<th colspan="2"><input type="text" name="startTime" id="startTime" class="Wdate" type="text"  onclick="WdatePicker({startDate: '%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${startTime!''}"/></th>
-  				<th colspan="2">&nbsp;到 <input type="text" name="endTime" id="endTime" class="Wdate" type="text"   onclick="WdatePicker({startDate: '%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${endTime!''}"/></th>
+  				<th align="right">创建时间：</th>
+  				<th align="left" colspan="1"><input type="text" name="startTime" id="startTime" class="Wdate" type="text"  onclick="WdatePicker({startDate: '%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${startTime!''}"/></th>
+  				<th align="right">到：</th>
+  				<th align="left" colspan="1"> <input type="text" name="endTime" id="endTime" class="Wdate" type="text"   onclick="WdatePicker({startDate: '%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${endTime!''}"/></th>
   				
+  				<th align="right">卡号：</th>
+  				<th align="left" colspan="1"><input class="required ipb_s" type='text' name='cardno' id='cardno' value='${cardno!""}' /></th>
   				<th style="padding-bottom:5px;"  colspan="3"><button  class="btn but_s" type='submit' >查 询</button>
   				<!--button  class="btn but_s" type='submit' >批量审核</button-->
   				<!--button  class="btn but_s" type='submit' >停止合作</button-->
@@ -186,8 +248,9 @@
 			<th>商品</th>
 			<th>代理商</th>
 			<th>创建时间</th>
+			<th>到期时间</th>
+			<th>使用时间</th>
 			<th>状态</th>
-			<th>批次</th>
 			<!--th>操作</th-->
 			<th width="4%">详情</th>
 	    </tr>    
@@ -200,12 +263,17 @@
 		  	<td align="center">${(item.goodsName)}</td>
 		  	<td align="center">${item.agent}</td>
 		  	<td align="center">${item.ctime?substring(0,10)!""}</td>
+		  	<td align="center">${item.endTime?substring(0,10)!""}</td>
+		  	<#if item.mtime==''>
+	        <td align="center">未使用</td>
+	        <#else>
+	        <td align="center">${item.mtime?substring(0,19)!""}</td>
+	        </#if>
 		  	<#if item.status=='y'>
 			<td align="center">未使用</td>
 			<#else>
-			<td align="center">已使用</td>
+			<td align="center"><a href='#' id="isread-text" class="co" value="${item.cardno!""}">已使用</a></td>
 			</#if>
-			<td align="center">${item.taskid!""}</td>
 		  	<td align="center"><img src="${rc.contextPath}/images/a.gif" id ='img${item_index}' title="点击展开" onclick='showDetail(${item_index});'></td>
 	    </tr>
 	    <!--以下为隐藏的层-->
@@ -222,14 +290,8 @@
 	    	   		       <#else>
 	    	   		       <td style="width:200px">已冻结</td>
 	    	   		       </#if>
-	    	   		       <td style="width:100px">使用时间：</td>
-	    	   		       <#if item.mtime==''>
-	    	   		       <td style="width:200px">未使用</td>
-	    	   		       <#else>
-	    	   		       <td style="width:200px">${item.mtime!""}</td>
-	    	   		       </#if>
-	    	   		       <td style="width:100px">到期时间：</td>
-	    	   		       <td style="width:200px">${item.endTime!""}</td>
+	    	   		       <td style="width:100px">批次：</td>
+	    	   		       <td style="width:200px">${item.taskid!""}</td>
 	    	   		    </tr>
 	    	   		</table>
 	    	   </div>
@@ -240,6 +302,12 @@
 	    </table>
 	   <div style="text-align:right "><@nav.pagenav /></div>
 	  </div>
+	  </div>
+	  
+	  <div style="display:none;">
+		<div id="simTestContent" class="simScrollCont">
+			<div class="mainlist"></div>
+	    </div>
 	  </div>
  </body>
 </html>

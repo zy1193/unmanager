@@ -73,13 +73,17 @@
 	  	 var taskname=$('#taskname').val();
 	  	 var startTime=$('#startTime').val();
 	  	 var endTime=$('#endTime').val();
-	  	 if(uid=='' && phone=='' && agent=='' && taskname=='' && startTime=='' && endTime==''){
+	  	 
+	  	 var acctType=$('#acctType').val();
+	  	 var isvalid=$('#isvalid').val();
+	  	 var first=$('#first').val();
+	  	 if(uid=='' && phone=='' && agent=='' && taskname=='' && startTime=='' && endTime=='' && acctType=='' && isvalid=='' && first==''){
 	  	 	if(!confirm('确实要导出所有账户吗？最好选择条件导出，重新选择请点“取消”！')){
 	  	 		return;
 	  	 	}
 	  	 }
 	  	 
-		 window.location.href='${rc.contextPath}/acct/exportExcel.act?uid='+uid+'&phone='+phone+'&agent='+agent+'&taskname='+taskname+'&startTime='+startTime+'&endTime='+endTime;
+		 window.location.href='${rc.contextPath}/acct/exportExcel.act?uid='+uid+'&phone='+phone+'&agent='+agent+'&taskname='+taskname+'&startTime='+startTime+'&endTime='+endTime+'&acctType='+acctType+'&isvalid='+isvalid+'&first='+first;
   	}
   	
   	function doPage(id,uid){
