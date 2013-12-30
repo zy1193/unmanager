@@ -17,7 +17,7 @@ public interface CreateAcctService {
 	 */
 	boolean createTimeAcct(String brandid, String number, String agent,
 			String year, String month, String day, String acctType,
-			String goodsId, String bindLimit);
+			String goodsId, String bindLimit, String remarks);
 
 	/**
 	 * 创建带余额的帐号
@@ -33,5 +33,5 @@ public interface CreateAcctService {
 	 * @return
 	 */
 	boolean createMoneyAcct(String brandid, String number, String money,
-			String year, String month, String day, String agent);
+			String year, String month, String day, String agent, String remarks);
 }

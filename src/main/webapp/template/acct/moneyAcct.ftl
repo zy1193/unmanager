@@ -104,6 +104,9 @@
   				月数：<input type='text' name='month' id='month' maxlength='2' class="required number ipb_m" />
   				天数：<input type='text' name='day' id='day' maxlength='2' class="required number ipb_m" />
   			</li>
+  			<li class="sl">备注：</li>
+  			<li class="sl"><textarea name='remarks' id='remarks' rows='5' cols='50' maxlength='100'></textarea></li>
+  			<li class="sl">&nbsp;</li>
   			<li class="nl label"><button type='submit' class="btn but_l shouxin ">提 交</button></li>
   		</ul>
   	</div>

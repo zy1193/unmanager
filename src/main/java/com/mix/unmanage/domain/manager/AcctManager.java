@@ -32,6 +32,7 @@ public interface AcctManager {
 	 * @return
 	 */
 	int editAcct(String pwd, long balance, String phone, String enableFlag,
-			String validDate, int bindLimit, String brandId, String uid);
+			String validDate, int bindLimit, String brandId, String uid,
+			String expTime, String remarks);
 
 }

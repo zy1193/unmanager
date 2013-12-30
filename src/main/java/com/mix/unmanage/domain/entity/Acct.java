@@ -5,7 +5,7 @@ public class Acct {
 	long acctId, uid, balance, giftbalance, Reserve1;
 	private String brandId, pwd, md5pwd, phone, enableFlag, createTime,
 			validDate, giftValidDate, Reserve2, agent, first, taskname,
-			acctType, goodsId, bindLimit;
+			acctType, goodsId, bindLimit, remarks;
 
 	private String packageId, packageName, lastCallTime, effTime, expTime,
 			packageType;
@@ -216,5 +216,13 @@ public class Acct {
 
 	public void setPackageType(String packageType) {
 		this.packageType = packageType;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 }

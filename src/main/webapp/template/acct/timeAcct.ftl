@@ -124,6 +124,9 @@
 	  			提取个数：<input type='text' name='number' id='number' maxlength='6' class="required number ipb_m" />
   				改绑限定次数：<input type='text' name='bindLimit' id='bindLimit' maxlength='6' class="required number ipb_m" />
   			</li>
+  			<li class="sl">备注：</li>
+  			<li class="sl"><textarea name='remarks' id='remarks' rows='5' cols='50' maxlength='100'></textarea></li>
+  			<li class="sl">&nbsp;</li>
   			<li class="nl label"><button type='submit' class="btn but_l shouxin ">提 交</button></li>
   		</ul>
   	</div>

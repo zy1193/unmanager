@@ -107,6 +107,7 @@
 		t3.goods_id
 		goods_id,
 		t3.bind_limit bind_limit,
+		t3.remarks remarks,
 		t.package_id package_id,
 		t.package_name package_name,
 		t.last_call_time last_call_time,
@@ -134,7 +135,16 @@
 	<update id="editAcct" parameterType="Map">
 		UPDATE balance SET
 		pwd=#{pwd},md5pwd=#{md5pwd},balance=#{balance},phone=#{phone},enable_flag=#{enableFlag}
-		,valid_date=#{validDate},bind_limit=#{bindLimit}
+		,valid_date=#{validDate},bind_limit=#{bindLimit},remarks=#{remarks}
+		WHERE
+		brand_id=#{brandId} AND
+		uid=#{uid}
+	</update>
+	
+	<!-- 编辑帐号包月信息 -->
+	<update id="editTimeAcct" parameterType="Map">
+		UPDATE time_acct SET
+		exp_time=#{expTime}
 		WHERE
 		brand_id=#{brandId} AND
 		uid=#{uid}

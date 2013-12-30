@@ -79,6 +79,7 @@ public class AcctAct {
 		String acctType = request.getParameter("acctType");
 		String goodsId = request.getParameter("goodsId");
 		String bindLimit = request.getParameter("bindLimit");
+		String remarks = request.getParameter("remarks");
 
 		if (StringUtils.isBlank(number) || StringUtils.isBlank(agent)
 				|| StringUtils.isBlank(year) || StringUtils.isBlank(month)
@@ -88,7 +89,7 @@ public class AcctAct {
 		}
 
 		boolean flag = createAcctService.createTimeAcct(brandid, number, agent,
-				year, month, day, acctType, goodsId, bindLimit);
+				year, month, day, acctType, goodsId, bindLimit, remarks);
 
 		if (flag) {
 			log.error("生成账号成功！");
@@ -127,6 +128,7 @@ public class AcctAct {
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		String day = request.getParameter("day");
+		String remarks = request.getParameter("remarks");
 
 		if (StringUtils.isBlank(number) || StringUtils.isBlank(agent)
 				|| StringUtils.isBlank(year) || StringUtils.isBlank(month)
@@ -136,7 +138,7 @@ public class AcctAct {
 		}
 
 		boolean flag = createAcctService.createMoneyAcct(brandid, number,
-				money, year, month, day, agent);
+				money, year, month, day, agent, remarks);
 
 		if (flag) {
 			log.error("生成账号成功！");
@@ -376,6 +378,8 @@ public class AcctAct {
 		String enableFlag = request.getParameter("enableFlag");
 		String validDate = request.getParameter("validDate");
 		String bindLimit = request.getParameter("bindLimit");
+		String expTime = request.getParameter("expTime");
+		String remarks = request.getParameter("remarks");
 
 		if (StringUtils.isBlank(uid) || StringUtils.isBlank(brandId)
 				|| StringUtils.isBlank(pwd) || StringUtils.isBlank(balance)
@@ -391,7 +395,7 @@ public class AcctAct {
 		try {
 			int i = acctManager.editAcct(pwd, Long.parseLong(balance), phone,
 					enableFlag, validDate, Integer.parseInt(bindLimit),
-					brandId, uid);
+					brandId, uid, expTime, remarks);
 
 			if (1 == i) {
 				log.info("编辑账户成功");

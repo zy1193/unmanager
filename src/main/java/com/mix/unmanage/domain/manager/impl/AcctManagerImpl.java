@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -138,7 +139,7 @@ public class AcctManagerImpl implements AcctManager {
 	@Override
 	public int editAcct(String pwd, long balance, String phone,
 			String enableFlag, String validDate, int bindLimit, String brandId,
-			String uid) {
+			String uid, String expTime, String remarks) {
 		String md5pwd = "";
 		try {
 			md5pwd = DigestUtils.md5Hex(pwd.getBytes(Const.CHARSET));
@@ -156,8 +157,18 @@ public class AcctManagerImpl implements AcctManager {
 		map.put("validDate", validDate);
 		map.put("bindLimit", bindLimit);
 		map.put("balance", balance * 10000);
+		map.put("expTime", expTime);
+		map.put("remarks", remarks);
 
-		return acctMapper.editAcct(map);
+		/** 更新账户信息 **/
+		acctMapper.editAcct(map);
+
+		if (StringUtils.isNotBlank(expTime)) {
+			/** 更新账户包月信息 **/
+			acctMapper.editTimeAcct(map);
+		}
+
+		return 1;
 	}
 
 }

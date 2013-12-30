@@ -42,4 +42,12 @@ public interface AcctMapper {
 	 * @return
 	 */
 	int editAcct(Map<String, Object> map);
+
+	/**
+	 * 编辑帐号包月信息
+	 * 
+	 * @param map
+	 * @return
+	 */
+	int editTimeAcct(Map<String, Object> map);
 }

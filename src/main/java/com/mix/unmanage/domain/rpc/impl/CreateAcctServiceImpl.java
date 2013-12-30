@@ -1,5 +1,8 @@
 package com.mix.unmanage.domain.rpc.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -23,11 +26,17 @@ public class CreateAcctServiceImpl implements CreateAcctService {
 	@Override
 	public boolean createTimeAcct(String brandid, String number, String agent,
 			String year, String month, String day, String acctType,
-			String goodsId, String bindLimit) {
+			String goodsId, String bindLimit, String remarks) {
 		String url = globalConfig.get("YX_EXTRACT_TIME_ACCT_URL");
 
-		String furl = String.format(url, brandid, number, agent, year, month,
-				day, acctType, goodsId, bindLimit);
+		String furl = "";
+		try {
+			furl = String.format(url, brandid, number, agent, year, month, day,
+					acctType, goodsId, bindLimit,
+					URLEncoder.encode(remarks, "UTF-8"));
+		} catch (UnsupportedEncodingException e1) {
+			log.info("创建包月账户编码异常：", e1);
+		}
 
 		log.info("创建包月账户的url：" + furl);
 		String rsp;
@@ -54,11 +63,16 @@ public class CreateAcctServiceImpl implements CreateAcctService {
 
 	@Override
 	public boolean createMoneyAcct(String brandid, String number, String money,
-			String year, String month, String day, String agent) {
+			String year, String month, String day, String agent, String remarks) {
 		String url = globalConfig.get("YX_EXTRACT_MONEY_ACCT_URL");
 
-		String furl = String.format(url, brandid, number, money, year, month,
-				day, agent);
+		String furl = "";
+		try {
+			furl = String.format(url, brandid, number, money, year, month, day,
+					agent, URLEncoder.encode(remarks, "UTF-8"));
+		} catch (UnsupportedEncodingException e1) {
+			log.info("创建余额账户编码异常：", e1);
+		}
 
 		log.info("创建余额账户的url：" + furl);
 		String rsp;

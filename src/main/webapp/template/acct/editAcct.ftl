@@ -76,13 +76,13 @@
 		<li class="sl">${acct.taskname!""}</li>
 		<li class="nl label">包月生效时间</li>
 		<#if acct.effTime??>
-		<li class="sl">${acct.effTime?substring(0,10)!""}</li>
+		<li class="sl">${acct.effTime?substring(0,19)!""}</li>
 		<#else>
 		<li class="sl"></li>
 		</#if>
 		<li class="nl label">包月到期时间</li>
 		<#if acct.expTime??>
-		<li class="sl">${acct.expTime?substring(0,10)!""}</li>
+		<li class="sl"><input type="text" name="expTime" id="expTime" class="Wdate" type="text"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${acct.expTime?substring(0,19)!""}"/></li>
 		<#else>
 		<li class="sl"></li>
 		</#if>
@@ -129,8 +129,9 @@
 		<li class="nl label">限定绑定次数</li>
 		<li class="sl"><input type="text" name="bindLimit" value="${acct.enableFlag!""}" class="required digits ipb_m" /></li>
 		<li class="nl label">账户有效期</li>
-		<li class="sl"><input type="text" name="validDate" id="validDate" class="Wdate required ipb_m" type="text"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${acct.validDate!''}"/></li>
-		
+		<li class="sl"><input type="text" name="validDate" id="validDate" class="Wdate required ipb_m" type="text"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="${acct.validDate?substring(0,19)!""}"/></li>
+		<li class="nl label">备注：</li>
+  		<li class="sl"><textarea name='remarks' id='remarks' rows='5' cols='50' maxlength='100'>${acct.remarks!""}</textarea></li>
 		<li class="nl fix"><button type="submit" class="but_l mima">提交</button></li>
 	</ul>
 </form>
