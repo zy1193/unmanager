@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mix.unmanage.persistence.mapper.SysMsgMapper">
+
+	<resultMap type="SysMsg" id="SysMsgMap">
+		<result property="brandId" column="brand_id" />
+	</resultMap>
+
+	<sql id="col">
+		id, brand_id, title, msg, ctime
+	</sql>
+
+	<select id="count" parameterType="Map" resultType="int">
+		select
+		count(1)
+		from t_msg
+		order by ctime desc
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<select id="list" parameterType="Map" resultMap="SysMsgMap">
+		select
+		<include refid="col" />
+		from t_msg
+		order by ctime desc
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<!-- 增加公告 -->
+	<insert id="addSysMsg" parameterType="Map">
+		INSERT
+		INTO t_msg
+		(brand_id,
+		title, msg, ctime) values
+		(#{brandId},#{title},#{msg},NOW())
+	</insert>
+
+	<!-- 删除公告 -->
+	<delete id="delSysMsg" parameterType="Map">
+		delete
+		from t_msg where
+		id=#{id}
+	</delete>
+
+	<!-- 查找公告 -->
+	<select id="getSysMsgInfo" resultMap="SysMsgMap">
+		select
+		<include refid="col" />
+		from t_msg where id=#{id}
+	</select>
+
+	<!-- 编辑帐号 -->
+	<update id="updateSysMsg" parameterType="Map">
+		UPDATE t_msg SET
+		brand_id=#{brandId},title=#{title},msg=#{msg},ctime=NOW()
+		WHERE
+		id=#{id}
+	</update>
+
+</mapper> 
