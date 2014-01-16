@@ -35,4 +35,12 @@ public interface AcctManager {
 			String validDate, int bindLimit, String brandId, String uid,
 			String expTime, String remarks);
 
+	/**
+	 * 查找phone绑定的账号数
+	 * 
+	 * @param map
+	 * @return
+	 */
+	int countPhone(String brandId, String phone);
+
 }

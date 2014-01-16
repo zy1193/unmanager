@@ -63,6 +63,7 @@
 <form action="${rc.contextPath}/acct/editAcct.act" name="inputform" method="post">
 <input type="hidden" name="brandId" value="${acct.brandId}"> 
 <input type="hidden" name="uid" value="${acct.uid}"> 
+<input type="hidden" name="ophone" value="${acct.phone}"> 
 	<ul class="fix">
 		<li class="nl label">品牌</li>
 		<li class="sl">亿信</li>
@@ -108,8 +109,8 @@
 		
 		<li class="nl label">密码</li>
 		<li class="sl"><input type="text" name="pwd" id="pwd" value="${acct.pwd!""}" class="required onlyLetterAndDigit ipb_m" /></li>
-		<li class="nl label">余额（分）</li>
-		<li class="sl"><input type="text" name="balance" value="${(acct.balance/10000)}" class="required digits ipb_m" /></li>
+		<li class="nl label">余额（元）</li>
+		<li class="sl"><input type="text" name="balance" value="${acct.v_balance!"0"}" class="required number ipb_m" /></li>
 		<li class="nl label">手机</li>
 		<li class="sl"><input type="text" name="phone" value="${acct.phone!""}" class="required mobile ipb_m" /></li>
 		<li class="nl label">是否冻结</li>
