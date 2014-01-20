@@ -108,16 +108,20 @@
 		goods_id,
 		t3.bind_limit bind_limit,
 		t3.remarks remarks,
-		t.package_id package_id,
+		t.package_id
+		package_id,
 		t.package_name package_name,
-		t.last_call_time last_call_time,
+		t.last_call_time
+		last_call_time,
 		t.eff_time eff_time,
 		t.exp_time exp_time,
-		t.package_type package_type
+		t.package_type
+		package_type
 		from
 		(SELECT * FROM
 		balance t1 WHERE
-		t1.brand_id=#{brandId} AND
+		t1.brand_id=#{brandId}
+		AND
 		uid=#{uid})
 		t3 left join
 		(SELECT * FROM
@@ -140,7 +144,7 @@
 		brand_id=#{brandId} AND
 		uid=#{uid}
 	</update>
-	
+
 	<!-- 编辑帐号包月信息 -->
 	<update id="editTimeAcct" parameterType="Map">
 		UPDATE time_acct SET
@@ -149,5 +153,13 @@
 		brand_id=#{brandId} AND
 		uid=#{uid}
 	</update>
+
+	<select id="countPhone" parameterType="Map" resultType="int">
+		select
+		count(1)
+		from balance
+		where brand_id=#{brandId}
+		and phone=#{phone} and acct_type='month'
+	</select>
 
 </mapper> 

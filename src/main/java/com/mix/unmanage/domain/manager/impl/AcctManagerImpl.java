@@ -156,7 +156,7 @@ public class AcctManagerImpl implements AcctManager {
 		map.put("enableFlag", enableFlag);
 		map.put("validDate", validDate);
 		map.put("bindLimit", bindLimit);
-		map.put("balance", balance * 10000);
+		map.put("balance", balance);
 		map.put("expTime", expTime);
 		map.put("remarks", remarks);
 
@@ -169,6 +169,15 @@ public class AcctManagerImpl implements AcctManager {
 		}
 
 		return 1;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public int countPhone(String brandId, String phone) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("brandId", brandId);
+		map.put("phone", phone);
+		return acctMapper.countPhone(map);
 	}
 
 }

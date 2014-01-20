@@ -50,4 +50,12 @@ public interface AcctMapper {
 	 * @return
 	 */
 	int editTimeAcct(Map<String, Object> map);
+
+	/**
+	 * 查找phone绑定的账号数
+	 * 
+	 * @param map
+	 * @return
+	 */
+	int countPhone(Map<String, Object> map);
 }

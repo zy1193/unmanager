@@ -20,6 +20,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.keicei.util.SequenceUtil;
+import com.mix.unmanage.common.GlobalConfig;
 import com.mix.unmanage.domain.entity.Acct;
 import com.mix.unmanage.domain.manager.AcctManager;
 import com.mix.unmanage.domain.manager.AgentManager;
@@ -48,6 +49,8 @@ public class AcctAct {
 	private AcctManager acctManager;
 	@Resource
 	private GoodsManager goodsManager;
+	@Resource
+	private GlobalConfig globalConfig;
 
 	@RequestMapping(value = "toCreateTimeAcct.act")
 	public String toCreateTimeAcct(ModelMap map, HttpServletRequest request) {
@@ -357,7 +360,12 @@ public class AcctAct {
 		// map.put("list", agentManager.list());
 		// map.put("goodslist", goodsManager.list());
 
-		map.put("acct", acctManager.selectAcct(brandId, uid));
+		Acct acct = acctManager.selectAcct(brandId, uid);
+		long balance = acct.getBalance();
+		/*** 转换成元 */
+		acct.setV_balance(String.valueOf(balance / 1000000.00));
+
+		map.put("acct", acct);
 
 		return "acct/editAcct";
 	}
@@ -372,6 +380,7 @@ public class AcctAct {
 			out = response.getWriter();
 		} catch (IOException e) {
 			log.error("保存帐号异常！");
+			return;
 		}
 
 		String uid = request.getParameter("uid");
@@ -379,6 +388,7 @@ public class AcctAct {
 		String pwd = request.getParameter("pwd");
 		String balance = request.getParameter("balance");
 		String phone = request.getParameter("phone");
+		String ophone = request.getParameter("ophone");
 		String enableFlag = request.getParameter("enableFlag");
 		String validDate = request.getParameter("validDate");
 		String bindLimit = request.getParameter("bindLimit");
@@ -396,21 +406,39 @@ public class AcctAct {
 			return;
 		}
 
+		/*** 检查此手机号码绑定账户的个数 ,0不检查 **/
+		int bandnum = Integer.parseInt(globalConfig.get(brandId.toUpperCase()
+				+ "_PHONE_BANDNUM"));
+
+		if (0 != bandnum && !phone.equals(ophone)) {
+			int i = acctManager.countPhone(brandId, phone);
+			if (i >= bandnum) {
+				log.info("此手机号码超过绑定账户个数限制=" + i);
+				out.print("此手机号码超过绑定账户个数限制！");
+				return;
+			}
+		}
+
 		try {
-			int i = acctManager.editAcct(pwd, Long.parseLong(balance), phone,
-					enableFlag, validDate, Integer.parseInt(bindLimit),
-					brandId, uid, expTime, remarks);
+			int i = acctManager.editAcct(pwd,
+					new Double(Double.parseDouble(balance) * 1000000)
+							.longValue(), phone, enableFlag, validDate, Integer
+							.parseInt(bindLimit), brandId, uid, expTime,
+					remarks);
 
 			if (1 == i) {
 				log.info("编辑账户成功");
 				out.print("编辑账户成功！");
+				return;
 			} else {
 				log.info("编辑账户失败");
 				out.print("编辑账户失败！");
+				return;
 			}
 		} catch (Exception e) {
 			log.info("编辑账户失败", e);
 			out.print("编辑账户失败，请联系管理员！");
+			return;
 		}
 
 	}

@@ -10,6 +10,9 @@ public class Acct {
 	private String packageId, packageName, lastCallTime, effTime, expTime,
 			packageType;
 
+	/*** 页面显示，做VO */
+	private String v_balance;
+
 	public long getAcctId() {
 		return acctId;
 	}
@@ -224,5 +227,13 @@ public class Acct {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public String getV_balance() {
+		return v_balance;
+	}
+
+	public void setV_balance(String v_balance) {
+		this.v_balance = v_balance;
 	}
 }
