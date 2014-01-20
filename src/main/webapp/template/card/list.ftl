@@ -139,6 +139,35 @@
 			}
 		});
 	 }
+	 
+	function doPage(id,cardno){
+  		if(!confirm('确定删除吗？删除后不可恢复！')){
+	  	 	return;
+	  	}
+	  	 
+     	var url = "${rc.contextPath}/card/deleteCard.act";
+		$.ajax({
+			url : url,
+			dataType : "html",
+			type : "POST",
+			async : false,
+			data : {
+				cardno : $.trim(cardno)
+			},
+			error: function(){
+		        alert('删除失败！');
+		    },
+			success : function(data) {
+				var a = $("#del" + id);
+				if(data=='success'){
+				 	a.eq(0).hide(500);
+				}else{
+					alert('删除失败！');
+				}
+			}
+		});
+	
+ 	}
 </script>
 <script type="text/javascript" src="${rc.contextPath}/js/DatePicker/WdatePicker.js"></script>
  <body>
@@ -251,12 +280,12 @@
 			<th>到期时间</th>
 			<th>使用时间</th>
 			<th>状态</th>
-			<!--th>操作</th-->
+			<th>操作</th>
 			<th width="4%">详情</th>
 	    </tr>    
 	    <#if list??>
 	    <#list list as item>
-	    <tr onmouseover="this.bgColor='#f6f6f6'" onmouseout="this.bgColor='#FFFFFF'" >
+	    <tr onmouseover="this.bgColor='#f6f6f6'" onmouseout="this.bgColor='#FFFFFF'" id="del${item_index}">
 	        <td align="center">${item_index}</td>
 	        <td align="center">${item.cardno}</td>
 		  	<td align="center">${item.cardpwd}</td>
@@ -271,9 +300,12 @@
 	        </#if>
 		  	<#if item.status=='y'>
 			<td align="center">未使用</td>
+			<td align="center"><a href='#' onClick="doPage('${item_index}','${item.cardno}')" >删除</a></td>
 			<#else>
 			<td align="center"><a href='#' id="isread-text" class="co" value="${item.cardno!""}">已使用</a></td>
+			<td align="center"></td>
 			</#if>
+			
 		  	<td align="center"><img src="${rc.contextPath}/images/a.gif" id ='img${item_index}' title="点击展开" onclick='showDetail(${item_index});'></td>
 	    </tr>
 	    <!--以下为隐藏的层-->

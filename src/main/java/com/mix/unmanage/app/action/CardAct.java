@@ -249,5 +249,41 @@ public class CardAct {
 		}
 		return;
 	}
+	
+	@RequestMapping(value = "deleteCard.act")
+	public void deleteCard(HttpServletResponse response,
+			HttpServletRequest request) {
+		log.info("删除充值卡请求=" + ServletUtil.herf(request));
+
+		String cardno = request.getParameter("cardno");
+
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			log.error("删除充值卡异常！");
+			return;
+		}
+
+		if (StringUtils.isBlank(cardno)) {
+			out.print("fail");
+			return;
+		}
+
+		Map<String, Object> map = new HashMap<String, Object>(2);
+		map.put("cardno", cardno);
+		map.put("brandid", "yx");
+		if (1 == cardManager.deleteCard(map)) {
+			log.info("删除充值卡成功！");
+			out.print("success");
+			return;
+		} else {
+			log.info("删除充值卡失败！");
+			out.print("fail");
+			return;
+		}
+
+	}
+
 
 }

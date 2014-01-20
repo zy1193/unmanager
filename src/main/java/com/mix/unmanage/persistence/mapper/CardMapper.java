@@ -10,4 +10,13 @@ public interface CardMapper {
 	int count(Map<String, Object> map);
 
 	List<Card> list(Map<String, Object> map);
+	
+	/***
+	 * 删除充值卡
+	 * 
+	 * @param map
+	 * @return
+	 */
+	int deleteCard(Map<String, Object> map);
+
 }

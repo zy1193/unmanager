@@ -11,7 +11,8 @@
 
 	<sql id="col">
 		id,goods_id,goods_name,brandid, cardno, cardpwd,
-		agent, status,
+		agent,
+		status,
 		enable_flag, ctime, mtime,
 		end_time,
 		taskid
@@ -42,7 +43,7 @@
 		select
 		<include refid="col" />
 		from t_pay_card
-		where brandid='yx' 
+		where brandid='yx'
 		<if test="goodsId!=null">and goods_id=#{goodsId}</if>
 		<if test="agent!=null">and agent=#{agent}</if>
 		<if test="taskid!=null"><![CDATA[and taskid=#{taskid}]]></if>
@@ -58,5 +59,12 @@
 			limit #{offset},#{limit}
 		</if>
 	</select>
+
+	<!-- 删除充值卡 -->
+	<delete id="deleteCard" parameterType="Map">
+		delete
+		from t_pay_card where
+		brandid=#{brandid} and cardno=#{cardno}
+	</delete>
 
 </mapper> 

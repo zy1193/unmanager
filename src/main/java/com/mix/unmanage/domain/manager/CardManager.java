@@ -14,4 +14,6 @@ public interface CardManager {
 	List<Card> list(Map<String, Object> map, int page, int pageSize);
 
 	HSSFWorkbook exportExcel(Map<String, Object> map);
+	
+	int deleteCard(Map<String, Object> map);
 }

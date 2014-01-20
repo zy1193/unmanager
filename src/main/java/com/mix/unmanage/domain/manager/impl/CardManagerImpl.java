@@ -111,4 +111,10 @@ public class CardManagerImpl implements CardManager {
 		return sheet;
 	}
 
+	@Transactional
+	@Override
+	public int deleteCard(Map<String, Object> map) {
+		return cardMapper.deleteCard(map);
+	}
+
 }
