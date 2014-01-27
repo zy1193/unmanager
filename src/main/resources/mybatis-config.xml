@@ -15,5 +15,7 @@
 		<typeAlias type="com.mix.unmanage.domain.entity.Card" alias="Card" />
 		<typeAlias type="com.mix.unmanage.domain.entity.Order" alias="Order" />
 		<typeAlias type="com.mix.unmanage.domain.entity.SysMsg" alias="SysMsg" />
+		<typeAlias type="com.mix.unmanage.domain.entity.Ad" alias="Ad" />
+		<typeAlias type="com.mix.unmanage.domain.entity.Conf" alias="Conf" />
 	</typeAliases>
 </configuration>
