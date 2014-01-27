@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mix.unmanage.persistence.mapper.ConfMapper">
+
+	<resultMap type="Conf" id="ConfMap">
+	</resultMap>
+
+	<sql id="col">
+		id,brandid, param, value, remark
+	</sql>
+	
+	<select id="count" parameterType="Map" resultType="int">
+		select
+		count(1)
+		from t_conf
+		where brandid=#{brandid}
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<select id="list" parameterType="Map" resultMap="ConfMap">
+		select
+		<include refid="col" />
+		from t_conf
+		where brandid=#{brandid}
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<!-- 编辑帐号 -->
+	<update id="editConf" parameterType="Map">
+		UPDATE t_conf SET
+		value=#{value}
+		WHERE
+		id=#{id}
+	</update>
+
+	<!-- 查找帐号 -->
+	<select id="selectConf" parameterType="Map" resultMap="ConfMap">
+		select
+		<include refid="col" />
+		from t_conf
+		where id=#{id}
+		limit
+		1
+	</select>
+
+</mapper> 

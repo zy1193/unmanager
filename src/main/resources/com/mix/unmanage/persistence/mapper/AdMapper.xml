@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mix.unmanage.persistence.mapper.AdMapper">
+
+	<resultMap type="Ad" id="AdMap">
+	</resultMap>
+
+	<sql id="col">
+		id,brandid,adpid,name,url,img
+	</sql>
+	
+	<insert id="insert" parameterType="Ad">
+		insert into t_ad
+		(brandid,adpid,name,url,img)
+		values
+		(#{brandid},#{adpid},#{name},#{url},#{img})
+	</insert>
+
+	<select id="count" parameterType="Map" resultType="int">
+		select
+		count(1)
+		from t_ad
+		where brandid=#{brandid}
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<select id="list" parameterType="Map" resultMap="AdMap">
+		select
+		<include refid="col" />
+		from t_ad
+		where brandid=#{brandid}
+		<if test="offset!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<!-- 删除帐号 -->
+	<delete id="deleteAd" parameterType="Map">
+		delete
+		from t_ad where
+		id=#{id}
+	</delete>
+
+	<!-- 编辑帐号 -->
+	<update id="editAd" parameterType="Map">
+		UPDATE t_ad SET
+		brandid=#{brandid},adpid=#{adpid},name=#{name},url=#{url},img=#{img}
+		WHERE
+		id=#{id}
+	</update>
+
+	<!-- 查找帐号 -->
+	<select id="selectAd" parameterType="Map" resultMap="AdMap">
+		select
+		<include refid="col" />
+		from t_ad
+		where id=#{id}
+		limit
+		1
+	</select>
+
+</mapper> 
